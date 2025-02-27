@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+SQLAlchemy[asyncio]
+asyncpg
+python-jose[cryptography]
+passlib[bcrypt]
+aioredis
+pydantic
+fastapi-limiter

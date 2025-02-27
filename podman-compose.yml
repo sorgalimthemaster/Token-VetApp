@@ -1,0 +1,42 @@
+version: "3.9"
+services:
+  app:
+    build: .
+    container_name: token_service_app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+    environment:
+      - db_user=postgres
+      - db_password=postgres
+      - db_host=db
+      - db_port=5432
+      - db_name=token_service
+      - redis_host=redis
+      - redis_port=6379
+      - redis_db=0
+      - secret_key=clave_super_segura_cambia_esto
+
+  db:
+    image: postgres:13
+    container_name: token_service_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: token_service
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:alpine
+    container_name: token_service_redis
+    ports:
+      - "6379:6379"
+
+volumes:
+  postgres_data:
